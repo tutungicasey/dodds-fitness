@@ -1,0 +1,22 @@
+# Render Blueprint - free DEMO web service (Singapore, nearest Render region to Melbourne)
+services:
+  - type: web
+    name: dodds-fitness-demo
+    runtime: node
+    region: singapore
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /login
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: SEED_DEMO
+        value: "true"
+      - key: DATABASE_PATH
+        value: /tmp/dodds.db          # ephemeral: demo data re-seeds on every restart/deploy
+      - key: SESSION_SECRET
+        generateValue: true           # reserved for future signed tokens; sessions are random DB-backed tokens
+      # STRIPE_SECRET_KEY intentionally unset -> clearly-labelled demo payments
